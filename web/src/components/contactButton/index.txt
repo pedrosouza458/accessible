@@ -1,0 +1,10 @@
+{/* Contact Button with Lucide React Icon */}
+<div className="flex justify-center">
+        <button
+          className="flex items-center px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none"
+          onClick={() => alert("Contact via WhatsApp")}
+        >
+          <CreditCard className="mr-2" size={20} /> {/* Using a CreditCard icon */}
+          Contact via WhatsApp
+        </button>
+      </div>
