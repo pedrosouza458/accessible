@@ -124,7 +124,7 @@ export default function Business() {
           </Link>
         </nav>
       </header>
-      <div className="md:px-52 py-12">
+      <div className="px-32 py-12">
         <div className="flex flex-col space-y-2">
           <form onSubmit={handleSubmit} className="text-center py-3">
             <Select onValueChange={(value) => setDistance(value)}>
@@ -132,67 +132,76 @@ export default function Business() {
                 <SelectValue placeholder="Selecione uma distância" />
               </SelectTrigger>
 
-            <SelectContent>
-              <SelectGroup>
-                {Object.entries(distances).map(([label, value]) => (
-                  <SelectItem key={value} value={value}>
-                    {label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-
+              <SelectContent>
+                <SelectGroup>
+                  {Object.entries(distances).map(([label, value]) => (
+                    <SelectItem key={value} value={value}>
+                      {label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
 
             <Select onValueChange={(value) => setCity(value)}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Selecione uma cidade" />
               </SelectTrigger>
 
-            <SelectContent>
-              <SelectGroup>
-                {Object.entries(Cities).map(([label, value]) => (
-                  <SelectItem key={value} value={value}>
-                    {value}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-      
-        </form>
-      </div>
+              <SelectContent>
+                <SelectGroup>
+                  {Object.entries(Cities).map(([label, value]) => (
+                    <SelectItem key={value} value={value}>
+                      {value}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </form>
+        </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 pt-6">
-        {business.length > 0 ? (
-          business.map((businessItem: any) => (
-            <Card key={businessItem.id} className="relative overflow-visible bg-[#E9F5FF]">
-              <CardHeader>
-                {businessItem.urgency && (
-                  <div className="absolute top-0 left-0 w-full py-2 px-2 font-bold text-center bg-yellow-300 transform -translate-y-1/2">
-                    EMERGÊNCIA
-                  </div>
-                )}
-
-                <CardTitle><h1 className="font-semibold text-center">{businessItem.name}</h1></CardTitle>
-
-                  <CardDescription>
-                    <img
-                      src={businessItem.logo}
-                      alt="Business Logo"
-                      style={{ width: "40rem", height: "14rem" }}
-                    />
-                  </CardDescription>
-                </CardHeader>
-
-                <CardContent>
-                  <h2 className="text-center">{businessItem.city}</h2>
-                </CardContent>
-
-                <CardFooter>
-                  <h3 className="text-center">{businessItem.description}</h3>
-                </CardFooter>
-              </Card>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pt-6">
+          {business.length > 0 ? (
+            business.map((businessItem: any) => (
+              <Card
+              key={businessItem.id}
+              className="relative overflow-hidden border-zinc-300 rounded-xl border-2"
+            >
+              <CardHeader className="relative">
+                {/* Always reserve space for the banner */}
+                <div className="w-full h-8 flex items-center justify-center">
+                  {businessItem.urgency && (
+                    <div className="absolute top-0 left-0 w-full py-2 px-2 font-bold text-center bg-[repeating-linear-gradient(45deg,_#FFDD57_0,_#FFDD57_10px,_#FFAD39_10px,_#FFAD39_20px)]">
+                      EMERGÊNCIA
+                    </div>
+                  )}
+                </div>
+            
+                {/* Card Title */}
+                <CardTitle>
+                  <h1 className="font-semibold text-center pb-4">{businessItem.name}</h1>
+                </CardTitle>
+            
+                {/* Card Description */}
+                <CardDescription>
+                  <img
+                    src={businessItem.logo}
+                    alt="Business Logo"
+                    className="w-full h-40 object-cover"
+                  />
+                </CardDescription>
+              </CardHeader>
+            
+              <CardContent>
+                <h2 className="text-center">{businessItem.city}</h2>
+              </CardContent>
+            
+              <CardFooter>
+                <h3 className="text-center">{businessItem.description}</h3>
+              </CardFooter>
+            </Card>
+            
             ))
           ) : (
             <p>Nenhuma empresa encontrada.</p>
