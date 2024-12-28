@@ -9,6 +9,6 @@ export async function GetBusinessById(app: FastifyInstance) {
         id,
       },
     });
-    return reply.send({business});
+    return reply.send(business);
   });
 }

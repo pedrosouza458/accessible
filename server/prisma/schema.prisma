@@ -22,14 +22,13 @@ model Business {
   description String
   city        String
   phone       String
-  position    String?
+  lat         String
+  long        String
   pixText     String?
   pixKey      String?
   urgency     Boolean  @default(false)
   links       Link[]
   createdAt   DateTime @default(now())
-
-  Form Form?
 }
 
 model Link {
@@ -38,38 +37,4 @@ model Link {
   url        String
   Business   Business? @relation(fields: [businessId], references: [id])
   businessId String?
-}
-
-model Form {
-  id         String     @id @default(uuid())
-  questions  Question[]
-  business   Business   @relation(fields: [businessId], references: [id])
-  businessId String     @unique
-  Answers    Answer[]
-}
-
-model Answer {
-  id         String   @id @default(uuid())
-  question   Question @relation(fields: [questionId], references: [id])
-  questionId String
-  form       Form?    @relation(fields: [formId], references: [id])
-  formId     String?
-  response   String?
-  createdAt  DateTime @default(now())
-}
-
-model Question {
-  id          String   @id @default(uuid())
-  title       String
-  inputType   String   @default("text") @map("input_type")
-  attachments String?
-  optional    Boolean
-  global      Boolean
-  Form        Form?    @relation(fields: [formId], references: [id])
-  formId      String?
-  Answer      Answer[]
-}
-
-model Jobs {
-  id String @id @default(uuid())
 }
