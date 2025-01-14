@@ -7,7 +7,7 @@ import { hash } from "bcryptjs";
 
 export async function CreateBusiness(app: FastifyInstance) {
   app.post("/business", async (request, reply) => {
-    const { name, city, phone, description, logo, position, email, password, urgency }: any = request.body;
+    const { name, city, phone, description, logo, lat, long, email, password, urgency }: any = request.body;
     const hashedPassword = await hash(password, 6);
     const business = await prisma.business.create({
       data: {
@@ -16,15 +16,14 @@ export async function CreateBusiness(app: FastifyInstance) {
         city, 
         description, 
         logo, 
-        position,
+        lat,
+        long,
         email,
         password: hashedPassword,
         urgency
       }
     })
-    let form = await CreateBusinessForm(business.id)
-    let questions = await CreateDefaultQuestions(form.id)
-    if(business && form && questions){
+    if(business){
       return reply.send(business)
     }
     return reply.send("Erro")
