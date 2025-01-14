@@ -14,27 +14,35 @@ datasource db {
 }
 
 model Business {
-  id          String   @id @default(uuid())
+  id          String     @id @default(uuid())
   name        String
   logo        String?
-  email       String   @unique
+  email       String     @unique
   password    String
   description String
   city        String
   phone       String
   lat         String
   long        String
-  pixText     String?
-  pixKey      String?
-  urgency     Boolean  @default(false)
+  pixText     String?    @map("pix_text")
+  pixKey      String?    @map("pix_key")
+  urgency     Boolean    @default(false)
   links       Link[]
-  createdAt   DateTime @default(now())
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  categories  Category[] @relation("business_category")
+}
+
+model Category {
+  id       String     @id @default(uuid())
+  name     String?
+  business Business[] @relation("business_category")
 }
 
 model Link {
   id         String    @id @default(uuid())
   title      String
   url        String
-  Business   Business? @relation(fields: [businessId], references: [id])
-  businessId String?
+  business   Business? @relation(fields: [businessId], references: [id])
+  businessId String?   @map("business_Id")
 }
