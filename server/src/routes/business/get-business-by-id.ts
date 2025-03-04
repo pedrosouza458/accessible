@@ -3,7 +3,7 @@ import { prisma } from "../../lib/prisma";
 
 export async function GetBusinessById(app: FastifyInstance) {
   app.get("/business/:id", async (request, reply) => {
-    const { id }: any = request.params;
+    const { id } = request.params as { id: string };
     const business = await prisma.business.findMany({
       where: {
         id,

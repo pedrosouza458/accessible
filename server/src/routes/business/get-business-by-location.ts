@@ -10,8 +10,12 @@ export async function GetBusinessByLocation(app: FastifyInstance) {
   */
 
   app.get("/business/:lat/:long", async (request, reply) => {
-    const { lat, long }: any = request.params;
-    const { city, range, category }: any = request.query; // Use query parameters for optional fields
+    const { lat, long } = request.params as { lat: string; long: string };
+    const { city, range, category } = request.query as {
+      city: string;
+      range: string;
+      category: string;
+    }; // Use query parameters for optional fields
     const earthRadius = 6371; // Earth radius in kilometers
     const defaultRange = 50; // Default 50km range if not specified
     const searchRange = range ? parseFloat(range) : defaultRange;
@@ -24,7 +28,7 @@ export async function GetBusinessByLocation(app: FastifyInstance) {
       filters.push({
         categories: {
           some: {
-            name: category, 
+            name: category,
           },
         },
       });

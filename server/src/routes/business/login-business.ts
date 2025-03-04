@@ -2,9 +2,14 @@ import { FastifyInstance } from "fastify";
 import { prisma } from "../../lib/prisma";
 import { compare } from "bcryptjs";
 
+interface LoginBusinessRequest {
+    email: string;
+    password: string;
+}
+
 export function LoginBusiness(app: FastifyInstance){
   app.post("/business/login", async (request, reply) => {
-    const { email, password }: any = request.body;
+    const { email, password } = request.body as LoginBusinessRequest;
 
     const businessFromEmail = await prisma.business.findMany({
       where: {
